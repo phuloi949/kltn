@@ -1,6 +1,6 @@
 from typing import Union
 from fastapi import FastAPI, Request, Header, Body, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from starlette.responses import FileResponse
 import pymongo
 import uvicorn
@@ -33,7 +33,28 @@ class LoginRequest(BaseModel):
     username: str
     password: str
 
-    
+@validator('username')
+def username_must_be_alphanumeric(cls, value):
+        if not value.isalnum() or not value.islower():
+            raise ValueError("Username must contain only lowercase alphanumeric characters")
+        return value
+@validator('password')
+def password_length(cls, value):
+        if len(value) < 8 or len(value) > 16:
+            raise ValueError('Password length must be between 8 and 16 characters')
+        return value
+
+@app.post("/users/")
+async def create_user(user: User, collection=collection1):
+    existing_user = await collection.find_one({"username": user.username})
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Username already exists")
+
+    user_dict = user.dict()
+    await collection.insert_one(user_dict)
+    return {"message": "User created successfully"}
+
+
 @app.get("/items/{item_id}")
 async def get_item(item_id: int, request: Request):
     client_ip = request.headers.get("Client-IP")
