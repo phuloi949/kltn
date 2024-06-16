@@ -25,8 +25,8 @@ from controller.fl_server import trigger_fl_server_run
 
 
 # Add route
-app.add_endpoint('/hello', 'hello', hello_world)
-app.add_endpoint('/total_client', 'total_client', get_total_client)
+app.add_endpoint('/hello', 'hello', hello_world) # This test need login -> pass Authorized key to headers ->  call
+app.add_endpoint('/total_client', 'total_client', get_total_client) #
 app.add_endpoint('/run_fl_server', 'run_fl_server', trigger_fl_server_run, ["POST"])
 app.add_endpoint('/add_user', 'add_user', add_user, ["POST"])
 app.add_endpoint('/login', 'login', login, ["POST"])
@@ -36,6 +36,5 @@ app.add_endpoint('/delete_client', 'delete_client', delete_client, ["POST"])
 
 
 if __name__ == "__main__":
-    
     app.run(debug=True)
     

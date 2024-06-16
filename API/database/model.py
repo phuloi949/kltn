@@ -34,8 +34,8 @@ This is for colorfull loging
 #     print(color_dict.get(color.lower(), Fore.WHITE) + text)
     
     
-    
-DATABASE_URI='mongodb://root:example@mongodb:27017/'
+MONGODB_CREDENTIAL = "" if os.getenv('MONGODB_CREDENTIAL')=="@" else os.getenv('MONGODB_CREDENTIAL')
+DATABASE_URI=f"mongodb://{MONGODB_CREDENTIAL}{os.getenv('MONGODB_HOST')}:27017/"
 DATABASE_NAME = 'my-database'
 USER_COLLECTION = "users"
 CLIENT_COLLECTION = "clients"

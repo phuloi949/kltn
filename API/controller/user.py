@@ -25,17 +25,20 @@ def login():
     user = User().login(username,password)
     if user:
         try:
+            print(os.getenv('SECRET_KEY'))
             user["token"] = jwt.encode(
                 {"user_id": user["_id"]},
                 os.getenv('SECRET_KEY'),
                 algorithm="HS256"
             )
+            print(user)
             
             return {
                 "message": "Successfully fetched auth token",
                 "data": user
             }
         except Exception as e:
+            print(f"Something went wrong: {e}")
             return {
                 "error": "Something went wrong",
                 "message": str(e)
