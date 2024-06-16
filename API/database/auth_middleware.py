@@ -38,7 +38,7 @@ def token_required(f):
                 "data": None,
                 "error": str(e)
             }, 500
-
+        print("Done Authenticate")
         return f(current_user, *args, **kwargs)
 
     return decorated

@@ -16,7 +16,7 @@ response = requests.get(url, headers=headers)
 
 # Check the response
 if response.status_code == 200:
-    print("Response:", response.json())
+    print("Response:", response.text)
 elif response.status_code == 401:
     print("Authentication failed:", response.json()['message'])
 else:
