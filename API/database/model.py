@@ -105,9 +105,8 @@ class Client():
                 "token": _token,
                 "creator": _id
             }
-        print_colored("data", "red")
         new_client = clientdb.insert_one(data)
-        print_colored(f"{new_client}", "blue")
+        print_colored(f"[ Done create client! ]: {new_client}", "cyan")
         return self.get_by_id(new_client.inserted_id)
     
     def delete_by_id(self, id):
@@ -177,8 +176,10 @@ class Client():
         else:
             return None
     
-    def count_client(user_id):
-        return clientdb.count_documents({"creator": user_id})
+    def count_client(self, user_id):
+        return str(clientdb.count_documents({"creator": user_id}))
+
+         
     
 # Example test
 

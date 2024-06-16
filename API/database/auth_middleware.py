@@ -2,6 +2,8 @@ from functools import wraps
 import jwt
 from flask import request
 from database.model import User
+from web_base.colored_print import print_colored
+from web_base.text_art import art_authenticated
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -12,8 +14,6 @@ def token_required(f):
     def decorated(*args, **kwargs):
         token = None
         if "Authorization" in request.headers:
-            print("------------------------")
-            print(request.headers["Authorization"])
             token = request.headers["Authorization"]
         if not token:
             return {
@@ -24,21 +24,21 @@ def token_required(f):
         try:
             data=jwt.decode(token, os.getenv('SECRET_KEY'), algorithms=["HS256"])
             current_user=User().get_by_id(data["user_id"])
-            print("-----current_user------")
-            print(current_user)
             if current_user is None:
                 return {
-                "message": "Invalid Authentication token!",
-                "data": None,
-                "error": "Unauthorized"
-            }, 401
+                    "message": "Invalid Authentication token!",
+                    "data": None,
+                    "error": "Unauthorized"
+                }, 401
+            print_colored(art_authenticated , "green")   
+            print_colored(f"Identity: {current_user['username']}", "yellow")
         except Exception as e:
             return {
                 "message": "Something went wrong",
                 "data": None,
                 "error": str(e)
             }, 500
-        print("Done Authenticate")
+        
         return f(current_user, *args, **kwargs)
 
     return decorated

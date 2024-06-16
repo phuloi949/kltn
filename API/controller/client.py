@@ -13,6 +13,10 @@ def add_client(_current_user):
         Add client to db
     """
     data = request.json
+    if(not data):
+        return {
+            "message": "No data received"
+            }
     client_id = data.get('client_id')
     client_ip = data.get('client_ip')
     client_status = data.get('client_status')
@@ -39,3 +43,6 @@ def delete_client(_current_user):
         }
     return Client().delete_by_client_id(client_id)
 
+@token_required
+def get_total_client(_current_user):
+    return  Client().count_client(str(_current_user["_id"]))

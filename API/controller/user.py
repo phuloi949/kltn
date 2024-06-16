@@ -10,7 +10,6 @@ def add_user():
     data = request.json
     username = data.get('username')
     password = data.get('password')
-    print("----------")
     return User().create(username, password)
 
 def login():
@@ -24,10 +23,8 @@ def login():
     username = data.get('username')
     password = data.get('password')
     user = User().login(username,password)
-    # print(user["_id"])
     if user:
         try:
-            # token should expire after 24 hrs
             user["token"] = jwt.encode(
                 {"user_id": user["_id"]},
                 os.getenv('SECRET_KEY'),
