@@ -1,2 +1,2 @@
 def is_online():
-    return True
+    return {"status": True}
