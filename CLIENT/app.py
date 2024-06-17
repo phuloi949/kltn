@@ -17,9 +17,11 @@ flask_app.json_encoder = JSONEncoder
 app = FlaskAppWrapper(flask_app)
 
 from controller.hello_world import hello
+from controller.status import is_online
 
 # app.add_endpoint('/hello', 'hello', hello)
 app.add_endpoint('/', 'hello', hello)
+app.add_endpoint('/is_online', 'is_online', is_online)
 
 if __name__ == "__main__":
     app.run(debug=True)
