@@ -35,7 +35,8 @@ def login():
             
             return {
                 "message": "Successfully fetched auth token",
-                "data": user
+                "data": user,
+                "script": "python -m or sth"
             }
         except Exception as e:
             print(f"Something went wrong: {e}")

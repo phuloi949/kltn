@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask 
 from web_base._flask import FlaskAppWrapper
 from dotenv import load_dotenv
 import os,json
@@ -6,7 +6,6 @@ from bson.objectid import ObjectId
 load_dotenv()
 
 flask_app = Flask(__name__)
-
 # Json Encoder
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):

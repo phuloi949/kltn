@@ -2,6 +2,7 @@ from database.model import Client
 import jwt
 from flask import request
 import os
+import requests
 from dotenv import load_dotenv
 from database.auth_middleware import token_required
 from database.auth_ip import ip_token_validate
@@ -19,7 +20,14 @@ def add_client(_current_user):
             }
     client_id = data.get('client_id')
     client_ip = data.get('client_ip')
-    client_status = data.get('client_status')
+    
+    # request to client to check is online
+    print(f"http://{client_ip}:5000/is_online")
+    status = requests.get(f"http://{client_ip}:5000/is_online")
+    print(status.json())
+    client_status = True
+    # if (status.json()['status'] != True):
+        # client_status = False
     model = data.get('model')
     _id = str(_current_user["_id"])
     
@@ -46,3 +54,20 @@ def delete_client(_current_user):
 @token_required
 def get_total_client(_current_user):
     return  Client().count_client(str(_current_user["_id"]))
+
+@token_required
+def client_login():
+    data = request.json
+    client_ip = data.get('client_ip')
+    username = data.get('username')
+    password = data.get('password')
+    res = requests.post(
+        f"http://{client_ip}:5000/client_login",
+        json = {
+            "username": username,
+            "password": password
+        }
+    ).json()
+    if(res['status']!= "Succesfully"):
+        return {'status': 'Failed'}
+    return {'status': 'Successfully!'}
