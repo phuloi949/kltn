@@ -6,6 +6,7 @@ import requests
 from dotenv import load_dotenv
 from database.auth_middleware import token_required
 from database.auth_ip import ip_token_validate
+from web_base.colored_print import print_colored
 load_dotenv()
 
 @token_required
@@ -41,6 +42,7 @@ def add_client(_current_user):
 
 @token_required
 def delete_client(_current_user):
+    print_colored("------[delete_client]-------", "cyan")
     data = request.json
     client_id = data.get('client_id')
     token = data.get('token')
@@ -53,27 +55,25 @@ def delete_client(_current_user):
 
 @token_required
 def get_total_client(_current_user):
+    print_colored("------[get_total_client]-------", "cyan")
     return  Client().count_client(str(_current_user["_id"]))
 
 @token_required
 def client_login(_current_user):
+    print_colored("------[client_login]-------", "cyan")
     data = request.json
     client_ip = data.get('client_ip')
-    username = data.get('username')
-    password = data.get('password')
-    print("Start to req")
-    print(f"{client_ip}, {username}, {password}")
-    res = requests.post(
-        f"http://{client_ip}:5000/login",
-        json = {
-            "username": username,
-            "password": password
-        }
-    )
-    print("type of: ")
-    print((res))
-    print("-------")
+    cred = {
+        "username": data.get('username'),
+        "password": data.get('password')
+    }
+    print_colored(str(cred), "green")
+    print_colored(str(client_ip), "green")
+    print(f"Direct ---> {client_ip}")
+    res = requests.post(f"http://{client_ip}:5000/login_client", json=cred)
     # res = res.json()
-    if(res['status']!= "Succesfully"):
-        return {'status': 'Failed'}
-    return {'status': 'Successfully!'}
+    print(str(res.json()))
+    # if(res['status']!= "Succesfully"):
+    #     return {'status': 'Failed'}
+    # return {'status': 'Successfully!'}
+    return res.json()
