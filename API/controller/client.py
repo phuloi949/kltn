@@ -56,18 +56,24 @@ def get_total_client(_current_user):
     return  Client().count_client(str(_current_user["_id"]))
 
 @token_required
-def client_login():
+def client_login(_current_user):
     data = request.json
     client_ip = data.get('client_ip')
     username = data.get('username')
     password = data.get('password')
+    print("Start to req")
+    print(f"{client_ip}, {username}, {password}")
     res = requests.post(
-        f"http://{client_ip}:5000/client_login",
+        f"http://{client_ip}:5000/login",
         json = {
             "username": username,
             "password": password
         }
-    ).json()
+    )
+    print("type of: ")
+    print((res))
+    print("-------")
+    # res = res.json()
     if(res['status']!= "Succesfully"):
         return {'status': 'Failed'}
     return {'status': 'Successfully!'}
