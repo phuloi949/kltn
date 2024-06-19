@@ -2,17 +2,20 @@ from database.model import User
 import jwt
 from flask import request
 import os
+from web_base.colored_print import print_colored
 from dotenv import load_dotenv
 load_dotenv()
 
 
 def add_user():
+    print_colored("------[add_user]-------", "cyan")
     data = request.json
     username = data.get('username')
     password = data.get('password')
     return User().create(username, password)
 
 def login():
+    print_colored("------[login]-------", "cyan")
     data = request.json
     if not data:
         return {
@@ -25,13 +28,11 @@ def login():
     user = User().login(username,password)
     if user:
         try:
-            print(os.getenv('SECRET_KEY'))
             user["token"] = jwt.encode(
                 {"user_id": user["_id"]},
                 os.getenv('SECRET_KEY'),
                 algorithm="HS256"
             )
-            print(user)
             
             return {
                 "message": "Successfully fetched auth token",
