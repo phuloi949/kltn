@@ -2,7 +2,7 @@
 .vscode/
 .venv*/
 venv*/
-__pycache__/
+**/__pycache__/** 
 dist/
 .coverage*
 htmlcov/
