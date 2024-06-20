@@ -15,7 +15,7 @@ def add_user():
     return User().create(username, password)
 
 def login():
-    print_colored("------[login]-------", "cyan")
+    print_colored("[5] ------[login]-------", "cyan")
     data = request.json
     if not data:
         return {
@@ -33,7 +33,7 @@ def login():
                 os.getenv('SECRET_KEY'),
                 algorithm="HS256"
             )
-            
+            print("[5.1] return script! ")
             return {
                 "message": "Successfully fetched auth token",
                 "data": user,

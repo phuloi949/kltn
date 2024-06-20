@@ -10,10 +10,10 @@ load_dotenv()
 def trigger_fl_server_run(_current_user):
     data = request.json
     print_colored(str(data), "yellow")
-    # if(not data):
-    #     return {
-    #         "message": "No data received"
-    #         }
+    if(not data):
+        return {
+            "message": "No data received"
+        }
     # _command = f'''python main_server.py server 
     #             --data_path {data.get('data_path')} 
     #             --dataset {data.get('dataset')} 

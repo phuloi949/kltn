@@ -178,6 +178,19 @@ class Client():
     
     def count_client(self, user_id):
         return str(clientdb.count_documents({"creator": user_id}))
+    
+    def update_client_status(self, id):
+        try:
+            result = clientdb.update_one(
+                    {"creator": id},
+                    {"$set": {"client_status": "Available"}}
+                )
+            if result.matched_count:
+                return {"status": "success", "message": "Client status updated."}
+            else:
+                return {"status": "failure", "message": "Client not found."}
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
 
          
     
