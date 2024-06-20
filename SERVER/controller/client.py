@@ -26,9 +26,7 @@ def add_client(_current_user):
     print(f"http://{client_ip}:5000/is_online")
     status = requests.get(f"http://{client_ip}:5000/is_online")
     print(status.json())
-    client_status = True
-    # if (status.json()['status'] != True):
-        # client_status = False
+    client_status = "Added!"
     model = data.get('model')
     _id = str(_current_user["_id"])
     
@@ -72,10 +70,9 @@ def client_login(_current_user):
     print(f"[2] Direct ---> {client_ip}")
     res = requests.post(f"http://{client_ip}:5000/login_client", json=cred)
     # res = res.json()
-    print("[7] --- TOken have been sent !")
+    print("[7] --- Token have been sent !")
     print(str(res.json()))
-    # if(res['status']!= "Succesfully"):
-    #     return {'status': 'Failed'}
-    # return {'status': 'Successfully!'}
+    update = Client().update_client_status(_current_user["_id"])
+    print(str(update))
     print("[8] --- Return to app")
     return res.json()

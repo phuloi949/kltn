@@ -22,6 +22,7 @@ from controller.hello_world import hello_world
 from controller.user import add_user, login
 from controller.client import add_client, delete_client, get_total_client, client_login
 from controller.fl_server import trigger_fl_server_run
+from controller.response import zip_file
 
 
 # Add route
@@ -33,6 +34,7 @@ app.add_endpoint('/login', 'login', login, ["POST"])
 app.add_endpoint('/add_client', 'add_client', add_client, ["POST"])
 app.add_endpoint('/delete_client', 'delete_client', delete_client, ["POST"])
 app.add_endpoint('/client_login', 'client_login', client_login, ["POST"])
+app.add_endpoint('/zip_file', 'zip_file', zip_file)
 
 
 

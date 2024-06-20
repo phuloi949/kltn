@@ -33,7 +33,7 @@ def login():
                 os.getenv('SECRET_KEY'),
                 algorithm="HS256"
             )
-            
+            print("[5.1] return script! ")
             return {
                 "message": "Successfully fetched auth token",
                 "data": user,
