@@ -60,7 +60,7 @@ def get_total_client(_current_user):
 
 @token_required
 def client_login(_current_user):
-    print_colored("------[client_login]-------", "cyan")
+    print_colored("[1]------[client_login]-------", "cyan")
     data = request.json
     client_ip = data.get('client_ip')
     cred = {
@@ -69,11 +69,13 @@ def client_login(_current_user):
     }
     print_colored(str(cred), "green")
     print_colored(str(client_ip), "green")
-    print(f"Direct ---> {client_ip}")
+    print(f"[2] Direct ---> {client_ip}")
     res = requests.post(f"http://{client_ip}:5000/login_client", json=cred)
     # res = res.json()
+    print("[7] --- TOken have been sent !")
     print(str(res.json()))
     # if(res['status']!= "Succesfully"):
     #     return {'status': 'Failed'}
     # return {'status': 'Successfully!'}
+    print("[8] --- Return to app")
     return res.json()

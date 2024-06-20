@@ -15,7 +15,7 @@ def add_user():
     return User().create(username, password)
 
 def login():
-    print_colored("------[login]-------", "cyan")
+    print_colored("[5] ------[login]-------", "cyan")
     data = request.json
     if not data:
         return {
