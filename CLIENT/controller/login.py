@@ -1,6 +1,6 @@
 import requests
 from flask import request
-from controller.token import save_data, load_token
+from controller.token import save_data
 from web_base.colored_print import print_colored
 # POST
 def login_client():

@@ -8,9 +8,7 @@ def load_token():
     try:
         with open('CLIENT/controller/tokens.json', 'r') as f:
             data = json.load(f)
-            return data.get('token', 'Token not found!')
+            return data.get('data', {}).get('token', 'Token not found!')
     except FileNotFoundError:
         return 'Token file not found!'
     
-    
-save_data("kk")
