@@ -21,14 +21,14 @@ app = FlaskAppWrapper(flask_app)
 from controller.hello_world import hello_world
 from controller.user import add_user, login
 from controller.client import add_client, delete_client, get_total_client, client_login
-from controller.fl_server import trigger_fl_server_run
+from controller.fl_server import start_train
 from controller.response import zip_file
 
 
 # Add route
 app.add_endpoint('/hello', 'hello', hello_world) # This test need login -> pass Authorized key to headers ->  call
 app.add_endpoint('/total_client', 'total_client', get_total_client) #
-app.add_endpoint('/run_fl_server', 'run_fl_server', trigger_fl_server_run, ["POST"])
+app.add_endpoint('/start_train', 'start_train', start_train, ["POST"])
 app.add_endpoint('/add_user', 'add_user', add_user, ["POST"])
 app.add_endpoint('/login', 'login', login, ["POST"])
 app.add_endpoint('/add_client', 'add_client', add_client, ["POST"])
