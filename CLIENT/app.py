@@ -18,12 +18,13 @@ app = FlaskAppWrapper(flask_app)
 from controller.hello_world import hello
 from controller.status import is_online
 from controller.login import login_client
-from controller.fl_client import client_install, client_train
+# from controller.fl_client import client_install, client_train
+from controller.fl_client import client_train
 
 # app.add_endpoint('/hello', 'hello', hello)
 app.add_endpoint('/', 'hello', hello)
 app.add_endpoint('/is_online', 'is_online', is_online)
-app.add_endpoint('/client_install', 'client_install', client_install)
+# app.add_endpoint('/client_install', 'client_install', client_install)
 app.add_endpoint('/client_train', 'client_train', client_train)
 app.add_endpoint('/login_client', 'login_client', login_client, ["POST"])
 
