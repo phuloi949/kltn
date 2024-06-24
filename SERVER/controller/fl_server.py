@@ -15,15 +15,9 @@ def start_train(_current_user):
         return {
             "message": "No data received"
         }
-    # server_train_command = ". script/activate && conda run -n myenv python main_train.py"
-    # os.system(server_train_command)
+    os.system("conda run -n fl_env python SERVER/resources/_flower/main_server.py")
     client_ip = data.get('client_ip')
-    # **
     try:
-        res = requests.get(f"http://{client_ip}:5000/client_install")
-        if (res.json()["status"] != "Successfully"):
-            return {"status": "Install dependencies failed"}
-        print_colored("Done install", "green")
         res = requests.get(f"http://{client_ip}:5000/client_train")
         if (res.json()["status"] != "Successfully"):
             return {"status": "Train proccess failed"}

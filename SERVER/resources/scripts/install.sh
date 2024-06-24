@@ -48,18 +48,18 @@ conda_preparation() {
     fi
 }
 
+
+# Update and install necessary packages
+echo "Updating and installing necessary packages"
+sudo apt-get update -y
+sudo apt-get install -y wget git curl python3-pip unzip
+
+# Assuming flower-homomorphic_encryption.zip is in the current directory
+unzip $current_dir/flower-homomorphic_encryption.zip -d $current_dir/_flower && mv $current_dir/_flower/flower-homomorphic_encryption/* $current_dir/_flower/ && rm -rf $current_dir/_flower/flower-homomorphic_encryption/
 # Check if fl_env exists
 if check_env_exists; then
     echo "Conda environment 'fl_env' already exists."
 else
-
-    # Update and install necessary packages
-    echo "Updating and installing necessary packages"
-    sudo apt-get update -y
-    sudo apt-get install -y wget git curl python3-pip unzip
-
-    # Assuming flower-homomorphic_encryption.zip is in the current directory
-    unzip $current_dir/flower-homomorphic_encryption.zip -d $current_dir/_flower && mv $current_dir/_flower/flower-homomorphic_encryption/* $current_dir/_flower/ && rm -rf $current_dir/_flower/flower-homomorphic_encryption/
 
     # Prepare Conda environment
     conda_preparation 
